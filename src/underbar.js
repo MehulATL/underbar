@@ -192,6 +192,13 @@ var _ = { };
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    var outcome = false;
+    _.every(collection, function(value){
+      if (iterator(value)){
+        outcome = true;
+      }
+    });
+    return outcome;
   };
 
 
