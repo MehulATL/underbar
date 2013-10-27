@@ -89,8 +89,8 @@ var _ = { };
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
     var output = [];
-    _.each(array, function(value, index, array){
-      if(_.indexOf(output, value) == -1){
+    _.each(array, function(value){
+      if (_.indexOf(output, value) === -1){
         output.push(value);
       }
     });
@@ -154,6 +154,16 @@ var _ = { };
   //   }, 0); // should be 6
   //
   _.reduce = function(collection, iterator, initialValue) {
+    var total = initialValue;
+    if (initialValue === undefined){
+      total = 0;
+    }else{
+      total = initialValue;
+    }
+    _.each(collection, function(value) {
+      total = iterator(total, value);
+    });
+    return total;
   };
 
   // Determine if the array or object contains a given value (using `===`).
