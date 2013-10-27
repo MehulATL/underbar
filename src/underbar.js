@@ -90,7 +90,7 @@ var _ = { };
   _.uniq = function(array) {
     var output = [];
     _.each(array, function(value){
-      if (_.indexOf(output, value) === -1){
+      if (!_.contains(output, value)){
         output.push(value);
       }
     });
