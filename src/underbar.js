@@ -193,9 +193,14 @@ var _ = { };
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
     var outcome = false;
+    var iterator = iterator || function(i){
+      return i;
+    };
     _.every(collection, function(value){
-      if (iterator(value)){
-        outcome = true;
+      if(typeof iterator === 'function'){
+        if (iterator(value)){
+          outcome = true;
+        }
       }
     });
     return outcome;
