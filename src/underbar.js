@@ -315,6 +315,12 @@ var _ = { };
 
   // Shuffle an array.
   _.shuffle = function(array) {
+    var shuffledArray = [];
+    while (array.length > 0){
+      var randNum = Math.floor(Math.random()*array.length);
+      shuffledArray.push(array.splice(randNum,1));
+    }
+    return shuffledArray;
   };
 
 
