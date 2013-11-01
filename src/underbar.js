@@ -177,14 +177,12 @@ var _ = { };
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
-    var outcome = true;
-    _.each(collection,function(value){
-      if(typeof iterator == 'function'){
-        if(!iterator(value)){
-          outcome = false;
-        }
-      }
-    });
+    var iterator = iterator || function (i) {
+      return i;
+    };
+    var outcome = _.reduce(collection, function(isTrue, i){
+      return !!iterator(i) && isTrue;
+    }, true);
     return outcome;
   };
 
@@ -350,6 +348,15 @@ var _ = { };
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var output = result || [];
+    _.each(nestedArray, function(value){
+      if(Array.isArray(value)){
+        _.flatten(value, output);
+      }else{
+        output.push(value);
+      }
+    });
+    return output;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
