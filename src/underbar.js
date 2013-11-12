@@ -173,36 +173,48 @@ var _ = { };
     }, false);
   };
 
-
-  // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
-    var iterator = iterator || function (i) {
-      return i;
-    };
-    var outcome = _.reduce(collection, function(isTrue, i){
-      return !!iterator(i) && isTrue;
-    }, true);
-    return outcome;
-  };
+    iterator = iterator || function (i){return i;}
+    return _.filter(collection, function() { return iterator.apply(this, arguments) }).length === collection.length;
+  }
+
+
+  // // Determine whether all of the elements match a truth test.
+  // _.every = function(collection, iterator) {
+  //   // TIP: Try re-using reduce() here.
+  //   var iterator = iterator || function (i) {
+  //     return i;
+  //   };
+  //   var outcome = _.reduce(collection, function(isTrue, i){
+  //     return !!iterator(i) && isTrue;
+  //   }, true);
+  //   return outcome;
+  // };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
+
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
-    var outcome = false;
-    var iterator = iterator || function(i){
-      return i;
-    };
-    _.every(collection, function(value){
-      if(typeof iterator === 'function'){
-        if (iterator(value)){
-          outcome = true;
-        }
-      }
-    });
-    return outcome;
-  };
+    iterator = iterator || function (i){return i;}
+    return _.filter(collection, function() { return iterator.apply(this, arguments) }).length > 0;
+  }
+
+
+  // _.some = function(collection, iterator) {
+  //   // TIP: There's a very clever way to re-use every() here.
+  //   var outcome = false;
+  //   var iterator = iterator || function(i){
+  //     return i;
+  //   };
+  //   _.every(collection, function(value){
+  //     if(typeof iterator === 'function'){
+  //       if (iterator(value)){
+  //         outcome = true;
+  //       }
+  //     }
+  //   });
+  //   return outcome;
+  // };
 
 
   /**
