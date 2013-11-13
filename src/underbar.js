@@ -328,11 +328,16 @@ var _ = { };
     var shuffledArray = [];
     while (array.length > 0){
       var randNum = Math.floor(Math.random()*array.length);
-      shuffledArray.push(array.splice(randNum,1));
+      shuffledArray.push(array.splice(randNum,1)[0]);
     }
     return shuffledArray;
   };
 
+// _.shuffle2 = function(array) {
+//   return array.sortBy(function(a, b) {
+//     parseInt(Math.random(3) - 1);
+//   })
+// }
 
   /**
    * Note: This is the end of the pre-course curriculum. Feel free to continue,
@@ -353,6 +358,15 @@ var _ = { };
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var result = [];
+    for(var i = 0; i < arguments[0].length; i++){
+      var innerArray = [];
+      _.each(arguments, function(argument){
+        innerArray.push(argument[i]);
+      })
+      result.push(innerArray)
+    }
+    return result;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
@@ -373,12 +387,28 @@ var _ = { };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
-  _.intersection = function() {
+  _.intersection = function(arr1, arr2) {
+    var result = [];
+    _.each(arr1, function(item){
+      if(arr2.indexOf(item) !== -1){
+        result.push(item);
+      }
+    });
+    return result;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    for(var i = 1; i < arguments.length; i++){
+      _.each(arguments[i], function(x){
+        var index = array.indexOf(x);
+        if(index > -1){
+          array.splice(index, 1);
+        }
+      });
+    }
+    return array;
   };
 
 
